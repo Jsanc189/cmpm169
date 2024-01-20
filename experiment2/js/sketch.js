@@ -65,25 +65,25 @@ function draw() {
 
 
 function keyPressed() {
-  //if up or down arrow key pressed, change the size of the shape
-  if (keyCode == UP_ARROW) size += 10;
-  if (keyCode == DOWN_ARROW) size -=10;
-  
-  //if left or right arrow pressed change the spawn displacement from x and y
-  if (keyCode == LEFT_ARROW) spawn_space += 1;
-  if (keyCode == RIGHT_ARROW) spawn_space -=1;
+   //if up or down arrow key pressed, change the size of the shape
+   if (keyCode == '87') size += 10;
+   if (keyCode == '83') size -=10;
+   
+   //if left or right arrow pressed change the spawn displacement from x and y
+   if (keyCode == '65') spawn_space += 1;
+   if (keyCode == '68') spawn_space -=1;
 }
 
 function keyReleased() {
-  //if space is released, change to a random color
-  if (key == ' ') my_color = color(random(255), random(255), random(255));
-  
-  //if 5-7 keys are pressed, change to corresponding shape
-  if (key == '5') {
-    my_shape = 'circle';
-  } else if (key == '6') {
-    my_shape = 'rectangle';
-  } else if (key == '7') {
-    my_shape = 'triangle';
-  }
+    //if space is released, change to a random color
+    if (key == ' ') my_color = color(random(255), random(255), random(255));
+    
+    //if 1-3 keys are pressed, change to corresponding shape
+    if (key == '1') {
+      my_shape = 'circle';
+    } else if (key == '2') {
+      my_shape = 'rectangle';
+    } else if (key == '3') {
+      my_shape = 'triangle';
+    }
 } 
