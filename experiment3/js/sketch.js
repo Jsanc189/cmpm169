@@ -9,6 +9,7 @@
 var particles_a = [];
 var particles_b = [];
 var particles_c = [];
+var clouds = [];
 
 //color pallets
 var morning_green = [215, 99, 127, 235, 208];
@@ -23,6 +24,7 @@ var twilight_blue = [205, 139, 226];
 
 //variable to limit how many particles are in each list
 var nums = 100;
+var nums_cloud = 7;
 
 //variable to hold the noise range
 var noiseScale = 3000;
@@ -48,6 +50,10 @@ function setup() {
     particles_c.push(new Particle(random(0, width), random(0, height)));
     
   }
+  
+  for (var i = 0; i < nums_cloud; i++){
+    clouds.push(new Cloud(random(0, width/9), random(0, height/8)));
+  }
 
 }
 
@@ -60,6 +66,7 @@ function draw() {
   //draws geometry with smooth edges
   smooth();
   
+  
   // for each i from 0 to nums
   for(var i = 0; i < nums; i++){
     //variable radius that re sizes  the scale from i in the scale of 0 to nums
@@ -68,6 +75,7 @@ function draw() {
     
     //variable to set the alpha i from 0-nums to 0-250
     var alpha = map(i, 0, nums, 0, 250);
+
     
     //set the color based on a number with transparency alpha
     fill(255 , random(morning_green), random(morning_blue), alpha);
@@ -89,6 +97,15 @@ function draw() {
     particles_c[i].display(radius);
     particles_c[i].checkEdge();
   }
+  
+  
+  //stroke(random(twilight_red), random(twilight_green), random(twilight_blue))
+    //draw clouds
+  for (var i =0; i < nums_cloud; i++) {
+    clouds[i].move();
+    clouds[i].display();
+  }
+
 }
 
 
@@ -141,4 +158,40 @@ function Particle(x,y){
     bezier(this.pos.x, this.pos.y, -this.pos.x + r, -this.pos.y - r, this.pos.x - r, this.pos.y +r, r, r);
   }
   
+}
+
+// Class to create a cloud shape
+function Cloud(x, y) {
+  this.x = x;
+  this.y = y;
+  this.speed = random(0.15, 0.25); // Adjust the speed as needed
+  this.minX = x - 50; // Set the minimum x-coordinate
+  this.maxX = x + 50; // Set the maximum x-coordinate
+
+
+  // Function to move the cloud back and forth
+  this.move = function() {
+    this.x += this.speed;
+
+    // If the cloud reaches the maximum x-coordinate, reverse the direction
+    if (this.x > this.maxX) {
+      this.speed *= -1;
+      this.x = this.maxX;
+    }
+
+    // If the cloud reaches the minimum x-coordinate, reverse the direction
+    if (this.x < this.minX) {
+      this.speed *= -1;
+      this.x = this.minX;
+    }
+  }
+
+  // Function to display the cloud
+  this.display = function() {
+    fill(255, 200); // Clouds are white with some transparency
+    ellipse(this.x, this.y, 100, 60);
+    ellipse(this.x + 30, this.y - 20, 80, 40);
+    ellipse(this.x - 30, this.y - 40, 80, 40);
+    ellipse(this.x +40, this.y+30, 60, 30);
+  }
 }
