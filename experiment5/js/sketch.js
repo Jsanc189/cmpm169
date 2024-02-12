@@ -35,7 +35,7 @@ function preload() {
 
 function setup() {
     canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
+    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height(), WEBGL);
     canvas.parent("canvas-container");
     // resize canvas is the page is resized
     $(window).resize(function() {
