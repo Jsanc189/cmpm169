@@ -102,7 +102,7 @@ function draw() {
   //set the background to a color
   // background(51);
   
-  backgroundImage(0);
+  background(0);
   image(backgroundImage, xPosition, yPosition, newWidth, newHeight);
   
   //Find the lowest point of the terrain
