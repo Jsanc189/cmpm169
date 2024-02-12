@@ -85,13 +85,13 @@ function setup() {
 }
 
 function draw() {
-  let scaleFactor = 2.3;
+  let scaleFactor = 2;
   
   let newWidth = backgroundImage.width * scaleFactor;
   let newHeight = backgroundImage.height * scaleFactor;
   
   // Calculate the position to center the scaled-up image
-  let xPosition = (width - newWidth) / 2 - 550;
+  let xPosition = (width - newWidth) / 2 - 50;
   let yPosition = (height - newHeight) / 2 -500;
   //update the flight position to move toward the screen by the # in the controls flight speed
   flightPos -= controls.flightSpeed;
@@ -102,6 +102,7 @@ function draw() {
   //set the background to a color
   // background(51);
   
+  backgroundImage(0);
   image(backgroundImage, xPosition, yPosition, newWidth, newHeight);
   
   //Find the lowest point of the terrain
