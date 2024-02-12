@@ -1,67 +1,107 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// sketch.js - Images, Video, & Sound Art
+// Author: Jackie Sanchez
+// Date: 2/2/24
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
+'use strict'
 
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+//variables
+var mic;
+var video;
+var x;
+var y;
+var curvePointX = 0;
+var curvePointY = 0;
+var pointCount = 3;
+var diffusion = 50;
+var soundThreshold = 0.02;
+var streamReady = false;
 
-// Globals
-let myInstance;
-let canvasContainer;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
-}
-
-// setup() function is called once when the program starts
 function setup() {
-    // place our canvas, making it fit our container
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
+  createCanvas(640, 480);  //set canvas size
+  background(255);  //set the background to white
 
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
+  getAudioContext().suspend();
+  
+  x = width /2;    //center x
+  y = height /2;   //center y
+
+  function mousePressed() {
+    userStartAudio();
+  }
+  
+  mic = new p5.AudioIn();
+  mic.start();
+  
+  //create a video capture
+  video = createCapture(VIDEO, function(){
+    streamReady = true;
+  });
+  
+  //set the size of the image to the width and height based on pixel density
+  video.size(width * pixelDensity(), height * pixelDensity());
+  
+  //hide the video from the screen
+  video.hide();
+  
+  //set the interior of shapes to no color
+  noFill();
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
-
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
+  //Get the volumn level from the microphone
+  var soundLevel = mic.getLevel();
+  
+  if(soundLevel > soundThreshold) {
+    
+  
+    if (streamReady) {
+      // Get the color from the video
+      var c = color(video.get(width - x, y));
+    
+      // Convert color under 'c' to Hue Saturation Value
+      var cHSV = chroma(red(c), green(c), blue(c));
+    
+      // Set the stroke weight to the cHSV value divided by 50
+      strokeWeight(5);
+    
+      // Set the color of the stroke to c
+      stroke(c);
+    
+      // Set the diffusion variable to a new range based on height to 5-100
+      diffusion = map(mouseY, 0, height, 5, 100);
+    
+      // Draw shapes with x and y
+      beginShape();
+    
+      // Draw a circular shape for the note head
+      var radius = 20; // You can adjust the radius
+      for (var angle = 0; angle <= 180; angle += 5) {
+        var xPos = x + radius * cos(radians(angle));
+        var yPos = y + radius * sin(radians(angle));
+        curveVertex(xPos, yPos);
+      }
+    
+    // Draw the stem
+    var stemHeight = 50; // You can adjust the stem height
+    curveVertex(x, y);
+    curveVertex(x, y + stemHeight);
+    
+    endShape();
+    
+    // Set x and y as the curve points
+    x = constrain(x + random(-diffusion, diffusion), 0, width - 1);
+    y = constrain(y + random(-diffusion, diffusion), 0, height - 1);
+    }
+  }
 }
-
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+  
+  
+function keyReleased() {
+  if (keyCode == DELETE || keyCode == BACKSPACE) clear();
+  if (key == 's' || key == 'S') saveCanvas(gd.timestamp(), 'png');
+  if (key == 'q' || key == 'Q') noLoop();
+  if (key == 'w' || key == 'W') loop();
+  if (keyCode == UP_ARROW) pointCount = min(pointCount + 1, 30);
+  if (keyCode == DOWN_ARROW) pointCount = max(pointCount - 1, 1);
 }
