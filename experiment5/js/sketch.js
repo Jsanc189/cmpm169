@@ -34,14 +34,7 @@ function preload() {
 }
 
 function setup() {
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height(), WEBGL);
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
+    createCanvas(1280, 720, WEBGL)
 
   for (let i = 0; i < 10; i++) {
     colors.push(color(0, 100, 255 - i * 20));
@@ -91,7 +84,7 @@ function draw() {
   let newHeight = backgroundImage.height * scaleFactor;
   
   // Calculate the position to center the scaled-up image
-  let xPosition = (width - newWidth) / 2 - 50;
+  let xPosition = (width - newWidth) / 2 - 520;
   let yPosition = (height - newHeight) / 2 -500;
   //update the flight position to move toward the screen by the # in the controls flight speed
   flightPos -= controls.flightSpeed;
