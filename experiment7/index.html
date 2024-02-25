@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 7 - Data Visualization and Networks</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+	<!-- Use me for a JavaScript OOP Project -->
+	<script type="text/javascript" src="./js/project.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+			<h1>Experiment 7 - Data Visualization and Networks</h1>
+			<div class="minor-section">
+				<h2>Imitate</h2>
+				<p>For this piece, I wanted to mimic the visualization of an example seen in class.</p>
+				<p>This is the example: https://informationisbeautiful.net/visualizations/worlds-biggest-data-breaches-hacks/.</p>
+				<p>As there was no code to look at, I had to start from scratch to try and achieve at least the likeness of circles representing the data</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Integrate</h2>
+				<p>The first task was to provide the data for the task.  I made a CSV file based on the total hours I have played for various games in my Steam Library</p>
+				<p>I then started by making circles with sizes based on the hours played per game.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Innovate</h2>
+				<p>I ended up populating a dictionary with the values in the CSV file and then iterating through the dictionary frome largest to smallest hours.</p>
+				<p>I then placed each circle onto the canvas from largest to smallest, making sure that they did not overlap, and were able to touch.</p>
+				<p>I added in a "gamer flare" with color and images.  </p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>This project may have seemed simple, but there was a lot of trouble shooting with the sizes, placement and text of each circle.</p>
+				<p>Thinking back I struggled the most with having the circles populate from largest to smallest to be able to fill the canvas without it them overlapping, all while not making the canvas look sparse.</p>
+				<p>Overall, I am happy with the result and the tone of the piece.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Results</h2>
+				<div id="canvas-container">
+					<!-- canvas will be added here -->
+				</div>
+			</div>
+		</section>
+		<nav id="links">
+			<!-- Put links to other pages (including the homepage) here. -->
+		</nav>
+	</main>
+</body>
+</html>
